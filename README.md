@@ -19,6 +19,82 @@
 
 ---
 
+I forked this. I wanted to fix [this bug](https://github.com/lethe-labs/oblivion-v2/issues/1).
+
+# How does it look like?
+
+Check out this walkthrough:
+
+![Demo](demo.gif)
+
+# How to use/build it?
+
+1) Create this Dockerfile
+
+```dockerfile
+FROM eclipse-temurin:17-jdk-jammy
+
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget unzip git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Android command-line tools (SDK manager)
+RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
+    && cd ${ANDROID_SDK_ROOT}/cmdline-tools \
+    && wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip \
+    && unzip -q tools.zip \
+    && rm tools.zip \
+    && mv cmdline-tools latest
+
+# Accept licenses and install required SDK components (matches README: SDK 34 target, min 26)
+RUN yes | sdkmanager --licenses >/dev/null \
+    && sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+
+WORKDIR /workspace
+
+# gradlew/gradle wrapper handles the actual Gradle version, no separate gradle install needed
+ENTRYPOINT ["sh", "./gradlew"]
+CMD ["assembleDebug"]
+```
+
+2. Use this script to build the apk
+
+```bash
+#!/usr/bin/env bash
+# Baut Oblivion V2 komplett isoliert in Docker. Läuft nichts auf dem Host außer Docker selbst.
+set -euo pipefail
+
+WORKDIR="$(pwd)/oblivion-v2-src"
+IMAGE_NAME="oblivion-builder"
+BUILD_TASK="${1:-assembleDebug}"   # assembleDebug (unsigned, sofort nutzbar) oder assembleRelease
+
+if [ ! -d "$WORKDIR" ]; then
+  echo "==> Klone Repo..."
+  git clone git@github.com:kmille/oblivion-v2.git "$WORKDIR"
+fi
+
+chmod +x "$WORKDIR/gradlew"
+
+echo "==> Baue Docker-Image (einmalig, danach gecached)..."
+sudo docker build -t "$IMAGE_NAME" .
+
+echo "==> Starte Build im Container: $BUILD_TASK"
+sudo docker run --rm \
+  -v "$WORKDIR":/workspace \
+  -v ./gradle-cache:/root/.gradle \
+  "$IMAGE_NAME" "$BUILD_TASK"
+
+echo "==> Fertig. APK liegt unter:"
+find "$WORKDIR/app/build/outputs/apk" -name "*.apk"
+```
+
+Just run `./build.sh`.
+
+# This is the upstream docs
+
 ## Intended audience
 
 Oblivion is a defensive anti-forensic system designed to protect personal data
