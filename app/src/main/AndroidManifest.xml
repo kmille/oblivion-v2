@@ -112,10 +112,19 @@
               l'utilisateur ait déverrouillé après un reboot
             - meta-data pointant vers xml/guard_accessibility_service.xml
         -->
+        <!--
+          directBootAware intentionally REMOVED (see issue #XXX):
+          SecurePrefs (EncryptedSharedPreferences + Keystore MasterKey)
+          lives in credential-encrypted storage, which is inaccessible
+          before the first unlock. A directBootAware service that tries
+          to access it during that window throws an exception, which
+          SecurePrefs used to misinterpret as tampering → immediate wipe.
+          Without directBootAware, the service only starts after the
+          first unlock, when storage is actually readable.
+        -->
         <service
             android:name=".core.guard.GuardAccessibilityService"
             android:exported="true"
-            android:directBootAware="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

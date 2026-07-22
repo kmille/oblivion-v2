@@ -34,17 +34,56 @@ class SecurePrefs private constructor(val prefs: SharedPreferences) {
             val prefs = try {
                 buildEncrypted(appCtx, masterKey)
             } catch (t: Throwable) {
-                // Le fichier existe mais ne peut pas être déchiffré — probable
-                // tampering. On tente un wipe immédiat.
-                handleCorruption(appCtx, t)
-                // Si le wipe a échoué (ou si admin pas actif), on repart
-                // avec un store vierge pour que l'app reste démarrable.
-                // Dans ce cas la config est perdue — c'est le prix à payer
-                // pour éviter de bloquer l'app en boucle.
+                // The file can be unreadable for TWO very different
+                // reasons:
+                //  1) real tampering (file corrupted/modified);
+                //  2) we're still in Direct Boot (before the first
+                //     unlock): credential-encrypted storage (where
+                //     MasterKey/EncryptedSharedPreferences live) is
+                //     structurally inaccessible — THIS IS NOT TAMPERING,
+                //     just a normal, transient system state.
+                // We must NEVER wipe for reason #2.
+                if (isLikelyDirectBootUnavailable(appCtx)) {
+                    SecLog.w(
+                        TAG,
+                        "Prefs unreadable but device not yet unlocked " +
+                            "(Direct Boot) → treating as storage-not-ready, NOT tampering",
+                    )
+                } else {
+                    handleCorruption(appCtx, t)
+                }
+                // If the wipe failed (or admin isn't active, or we
+                // deliberately skipped wiping because of Direct Boot),
+                // start over with a blank store so the app stays
+                // bootable. In that case the config is lost — that's the
+                // price to pay to avoid a boot loop.
                 appCtx.deleteSharedPreferences(FILE_NAME)
                 buildEncrypted(appCtx, masterKey)
             }
             return SecurePrefs(prefs)
+        }
+
+        /**
+         * `true` if the device hasn't been unlocked yet since the last
+         * boot (i.e. we're in Direct Boot, credential-encrypted storage
+         * is inaccessible by design — not a sign of tampering). Relies
+         * on `UserManager.isUserUnlocked()`, the official system API for
+         * this exact distinction.
+         *
+         * On error (old SDK, service unavailable), we conservatively
+         * assume `false` (= "treat as possible tampering") so we don't
+         * weaken detection on devices where this situation doesn't
+         * actually occur.
+         */
+        private fun isLikelyDirectBootUnavailable(context: Context): Boolean {
+            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) return false
+            return try {
+                val um = context.getSystemService(android.os.UserManager::class.java)
+                um?.isUserUnlocked == false
+            } catch (t: Throwable) {
+                SecLog.w(TAG, "isUserUnlocked check failed, assuming NOT direct-boot", t)
+                false
+            }
         }
 
         /**
