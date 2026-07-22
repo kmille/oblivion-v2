@@ -25,7 +25,7 @@ I forked this. I wanted to fix [this bug](https://github.com/lethe-labs/oblivion
 
 Check out this walkthrough:
 
-![Demo](demo.gif)
+<img src="demo.gif" alt="Demo" width="70%">
 
 # How to use/build it?
 
