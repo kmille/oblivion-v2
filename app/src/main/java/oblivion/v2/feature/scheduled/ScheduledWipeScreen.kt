@@ -126,7 +126,7 @@ fun ScheduledWipeScreen(
                 ArmCard(
                     selectedMs = selectedMs,
                     onPickDateTime = { newMs -> selectedMs = newMs },
-                    canArm = adminActive && canExact,
+                    canArm = canExact,
                     onArm = { vm.arm(selectedMs) },
                 )
             }

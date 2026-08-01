@@ -103,7 +103,7 @@ fun DeadmanScreen(
 
             MasterCard(
                 enabled = config.enabled,
-                canToggle = adminActive,
+                canToggle = true,
                 onToggle = vm::setEnabled,
             )
 

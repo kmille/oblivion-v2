@@ -32,7 +32,6 @@ class ScheduledWipeViewModel @Inject constructor(
 
     /** Arme l'alarme pour l'instant absolu [wipeAtMs]. Appelé depuis l'UI. */
     fun arm(wipeAtMs: Long) {
-        if (!wipeGateway.isAdminActive()) return
         if (wipeAtMs <= System.currentTimeMillis()) return
         val ctx = getApplication<Application>()
         store.saveArmed(wipeAtMs)

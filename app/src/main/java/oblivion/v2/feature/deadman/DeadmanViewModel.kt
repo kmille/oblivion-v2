@@ -32,7 +32,6 @@ class DeadmanViewModel @Inject constructor(
     fun isAdminActive(): Boolean = wipeGateway.isAdminActive()
 
     fun setEnabled(enabled: Boolean) {
-        if (enabled && !wipeGateway.isAdminActive()) return
         store.setEnabled(enabled)
         DeadmanScheduler.apply(getApplication(), enabled)
         if (enabled) {
