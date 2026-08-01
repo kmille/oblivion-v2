@@ -190,16 +190,20 @@
         <receiver
             android:name=".core.scheduled.ScheduledWipeReceiver"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:directBootAware="true" />
 
         <!--
-          Wipe programmé : re-arme l'alarme après un reboot (AlarmManager
-          perd ses alarmes au redémarrage).
+          Scheduled wipe: re-arms the alarm after a reboot (AlarmManager
+          loses its alarms on restart). directBootAware: must be able to
+          fire even if the device has never been unlocked since the last
+          reboot (the "confiscated, never unlocked" case).
         -->
         <receiver
             android:name=".core.scheduled.ScheduledWipeBootReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
