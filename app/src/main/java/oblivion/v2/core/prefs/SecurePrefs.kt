@@ -25,14 +25,65 @@ class SecurePrefs private constructor(val prefs: SharedPreferences) {
     companion object {
         private const val TAG = "SecurePrefs"
         private const val FILE_NAME = "oblivion_v2_secure_prefs"
+        private const val FILE_NAME_DEVICE_PROTECTED = "oblivion_v2_guard_dp_prefs"
 
-        fun create(context: Context): SecurePrefs {
-            val appCtx = context.applicationContext
+        /**
+         * Standard store, in credential-encrypted storage. Used for
+         * everything that doesn't need to run before the first unlock
+         * (Decoy, SMS-Kill, Voice-Kill, Deadman, etc.).
+         */
+        fun create(context: Context): SecurePrefs = create(context, deviceProtected = false)
+
+        /**
+         * Store in **device-protected storage**, readable from boot,
+         * *before* the first unlock (Direct Boot). Reserved for data
+         * that must be checkable at that stage — typically
+         * [oblivion.v2.core.guard.GuardConfigStore], so the duress PIN
+         * works from the very first lockscreen after a reboot, on
+         * File-Based-Encryption (FBE) devices without forced "Secure
+         * Startup". See README § Known limitations for devices where
+         * this remains impossible (FDE, Secure Startup enabled).
+         */
+        fun createDeviceProtected(context: Context): SecurePrefs =
+            create(context, deviceProtected = true)
+
+        private fun create(context: Context, deviceProtected: Boolean): SecurePrefs {
+            val baseCtx = context.applicationContext
+            val appCtx = if (deviceProtected) {
+                // Separate context that reads/writes in device-protected
+                // storage, accessible before the first unlock.
+                baseCtx.createDeviceProtectedStorageContext()
+            } else {
+                baseCtx
+            }
+            val fileName = if (deviceProtected) FILE_NAME_DEVICE_PROTECTED else FILE_NAME
+
+            if (deviceProtected) {
+                // IMPORTANT: no EncryptedSharedPreferences/Tink/Keystore
+                // here. Observed in practice: the MasterKey →
+                // AndroidKeysetManager chain somewhere makes a call that
+                // falls back onto the credential-encrypted Context
+                // (likely a `context.applicationContext` internal to
+                // Tink that doesn't preserve the device-protected
+                // wrapper). Result: it crashed with the exact same
+                // IllegalStateException("credential encrypted
+                // storage...") we were trying to avoid, including in the
+                // retry after deleting the file → uncaught crash.
+                //
+                // GuardConfigStore only ever stores a hash+salt anyway
+                // (never the PIN in clear): the benefit of Keystore
+                // encryption here is marginal, while reliability during
+                // Direct Boot is critical. So we use plain, unencrypted
+                // SharedPreferences on the device-protected context —
+                // pure file I/O, no dependency on Keystore/Tink at all.
+                return SecurePrefs(appCtx.getSharedPreferences(fileName, Context.MODE_PRIVATE))
+            }
+
             val masterKey = MasterKey.Builder(appCtx)
                 .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
                 .build()
             val prefs = try {
-                buildEncrypted(appCtx, masterKey)
+                buildEncrypted(appCtx, fileName, masterKey)
             } catch (t: Throwable) {
                 // The file can be unreadable for TWO very different
                 // reasons:
@@ -59,8 +110,8 @@ class SecurePrefs private constructor(val prefs: SharedPreferences) {
                 // back to an empty, non-persistent in-memory store
                 // instead: degraded, but never a crash.
                 try {
-                    appCtx.deleteSharedPreferences(FILE_NAME)
-                    buildEncrypted(appCtx, masterKey)
+                    appCtx.deleteSharedPreferences(fileName)
+                    buildEncrypted(appCtx, fileName, masterKey)
                 } catch (t2: Throwable) {
                     SecLog.e(TAG, "Retry also failed, falling back to in-memory store", t2)
                     InMemoryPrefs()
@@ -125,10 +176,11 @@ class SecurePrefs private constructor(val prefs: SharedPreferences) {
 
         private fun buildEncrypted(
             context: Context,
+            fileName: String,
             masterKey: MasterKey,
         ): SharedPreferences = EncryptedSharedPreferences.create(
             context,
-            FILE_NAME,
+            fileName,
             masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,

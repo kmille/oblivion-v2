@@ -32,9 +32,21 @@ object CoreModule {
     fun provideSecurePrefs(@ApplicationContext context: Context): SecurePrefs =
         SecurePrefs.create(context)
 
+    /**
+     * Device-protected instance, readable from Direct Boot (before the
+     * first unlock). Reserved for now for [GuardConfigStore] (duress PIN
+     * must work without a prior unlock). See [GuardDeviceProtected] for
+     * the full reasoning.
+     */
     @Provides
     @Singleton
-    fun provideGuardConfigStore(securePrefs: SecurePrefs): GuardConfigStore =
+    @GuardDeviceProtected
+    fun provideGuardSecurePrefs(@ApplicationContext context: Context): SecurePrefs =
+        SecurePrefs.createDeviceProtected(context)
+
+    @Provides
+    @Singleton
+    fun provideGuardConfigStore(@GuardDeviceProtected securePrefs: SecurePrefs): GuardConfigStore =
         GuardConfigStore(securePrefs)
 
     @Provides
