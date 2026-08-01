@@ -211,6 +211,31 @@
         </receiver>
 
         <!--
+          Dead Man's Switch: safety net for the "reboot then never
+          unlocked again" case. The periodic WorkManager job
+          (DeadmanWorker) handles the normal case (device unlocked/in
+          use); it doesn't run during Direct Boot (a limitation of
+          WorkManager itself). These two receivers cover exactly that
+          gap, following the same pattern as Scheduled Wipe above.
+        -->
+        <receiver
+            android:name=".core.deadman.DeadmanAlarmReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:directBootAware="true" />
+
+        <receiver
+            android:name=".core.deadman.DeadmanBootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!--
           Étape 4 : SMS Wipe — BroadcastReceiver qui écoute les SMS entrants.
           Si le SMS provient du numéro autorisé et contient le mot-clé,
           le wipe est déclenché immédiatement.

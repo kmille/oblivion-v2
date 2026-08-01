@@ -36,8 +36,8 @@ object CoreModule {
      * Device-protected instance, readable from Direct Boot (before the
      * first unlock). Reserved for stores whose trigger must be able to
      * fire without a prior unlock: Guard (duress PIN), Scheduled Wipe
-     * (the "alarm clock"). See [GuardDeviceProtected] for the full
-     * reasoning.
+     * (the "alarm clock"), Dead Man's Switch. See [GuardDeviceProtected]
+     * for the full reasoning.
      */
     @Provides
     @Singleton
@@ -72,7 +72,7 @@ object CoreModule {
 
     @Provides
     @Singleton
-    fun provideDeadmanConfigStore(securePrefs: SecurePrefs): DeadmanConfigStore =
+    fun provideDeadmanConfigStore(@GuardDeviceProtected securePrefs: SecurePrefs): DeadmanConfigStore =
         DeadmanConfigStore(securePrefs)
 
     @Provides

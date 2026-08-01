@@ -35,6 +35,12 @@ class DeadmanViewModel @Inject constructor(
         if (enabled && !wipeGateway.isAdminActive()) return
         store.setEnabled(enabled)
         DeadmanScheduler.apply(getApplication(), enabled)
+        if (enabled) {
+            // Arm immediately rather than waiting for the first
+            // WorkManager tick (up to 15 min initial delay possible).
+            val cfg = store.load()
+            DeadmanScheduler.armSafetyNet(getApplication(), cfg.lastCheckInMs + cfg.intervalMs)
+        }
     }
 
     /** Règle l'intervalle en heures (bornes MIN/MAX appliquées côté store). */

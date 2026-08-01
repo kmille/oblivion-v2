@@ -46,9 +46,18 @@ class DeadmanWorker(
             SecLog.d(TAG, "doWork() enabled=${cfg.enabled} ready=${cfg.isReady()} remainingMs=${cfg.remainingMs()}")
 
             if (!cfg.isReady()) {
-                // Rien à faire : switch désactivé ou pas encore de check-in.
+                // Nothing to do: switch disabled or no check-in yet.
                 return Result.success()
             }
+
+            // Refresh the Direct-Boot safety-net alarm (see
+            // DeadmanScheduler/DeadmanAlarmReceiver) so it stays aligned
+            // with the current check-in/interval. Done here rather than
+            // at every individual mutation (setEnabled/setInterval/
+            // touchCheckIn) to keep those call sites simple; max
+            // staleness 15 min, plenty given the switch's minimum
+            // interval is 1 hour.
+            DeadmanScheduler.armSafetyNet(applicationContext, cfg.lastCheckInMs + cfg.intervalMs)
 
             if (cfg.isExpired()) {
                 if (!gateway.isAdminActive()) {
