@@ -16,16 +16,7 @@
     <string name="cancel">Annuler</string>
 
     <!-- Écran de test du wipe (Étape 1) -->
-    <string name="wipe_test_title">Test du wipe</string>
-    <string name="wipe_test_admin_active">Admin appareil actif</string>
-    <string name="wipe_test_admin_active_desc">Oblivion V2 peut effacer cet appareil. Le bouton ci-dessous est opérationnel.</string>
-    <string name="wipe_test_admin_inactive">Admin appareil inactif</string>
-    <string name="wipe_test_admin_inactive_desc">Active l\'administrateur d\'appareil pour autoriser Oblivion V2 à effacer le téléphone.</string>
-    <string name="wipe_test_enable_admin">Activer l\'admin appareil</string>
-    <string name="wipe_test_warning">⚠️ Appuyer sur le bouton ci-dessous effacera DÉFINITIVEMENT toutes les données de ce téléphone. Pour de vrai. Utilise un téléphone de test.</string>
-    <string name="wipe_test_button">EFFACER L\'APPAREIL MAINTENANT</string>
-    <string name="wipe_test_open_guard">Ouvrir le Garde-clefs (détecteur lockscreen)</string>
-        
+                                            
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 6 : Dashboard                                                 -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -51,8 +42,7 @@
             
             
     <string name="dash_configure">Configurer</string>
-    <string name="dash_open_wipe_test">Test du wipe &amp; diagnostics</string>
-    <string name="dash_status_on">ON</string>
+        <string name="dash_status_on">ON</string>
     <string name="dash_status_off">OFF</string>
 
     <string name="dash_warn_show_password">« Afficher les mots de passe » est désactivé. Le Garde-clefs ne peut pas lire la saisie du PIN. Active-le dans Paramètres > Sécurité.</string>
@@ -80,22 +70,11 @@
         
                             
     <!-- Confirmation étape 1 -->
-    <string name="wipe_test_confirm1_title">Vraiment effacer ?</string>
-    <string name="wipe_test_confirm1_text">Cela effacera tout ce qu\'il y a sur ce téléphone : photos, applis, comptes, messages. Aucun retour en arrière, aucune récupération possible.</string>
-    <string name="wipe_test_confirm1_continue">Continuer</string>
-
+            
     <!-- Confirmation étape 2 -->
-    <string name="wipe_test_confirm2_title">Dernière chance</string>
-    <string name="wipe_test_confirm2_text">Tape %1$s dans le champ pour activer le bouton d\'effacement.</string>
-    <string name="wipe_test_confirm2_expected">WIPE</string>
-    <string name="wipe_test_confirm2_go">EFFACER MAINTENANT</string>
-
+                
     <!-- Diagnostic -->
-    <string name="wipe_test_open_admin_settings">Ouvrir les paramètres Admin système</string>
-    <string name="wipe_test_diag_title">Diagnostic</string>
-    <string name="wipe_test_diag_component">Composant : %1$s</string>
-    <string name="wipe_test_diag_admin_state">isAdminActive() = %1$s</string>
-
+                
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 2C : Garde-clefs (configuration des déclencheurs lockscreen) -->
     <!-- ══════════════════════════════════════════════════════════════════ -->

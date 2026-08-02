@@ -16,16 +16,7 @@
     <string name="cancel">Cancel</string>
 
     <!-- Wipe test screen (Étape 1) -->
-    <string name="wipe_test_title">Wipe test</string>
-    <string name="wipe_test_admin_active">Device Admin active</string>
-    <string name="wipe_test_admin_active_desc">Oblivion V2 can wipe this device. The WIPE button below is live.</string>
-    <string name="wipe_test_admin_inactive">Device Admin inactive</string>
-    <string name="wipe_test_admin_inactive_desc">Enable Device Admin to allow Oblivion V2 to wipe the device.</string>
-    <string name="wipe_test_enable_admin">Enable Device Admin</string>
-    <string name="wipe_test_warning">⚠️ Pressing the button below will irreversibly erase ALL data on this device. For real. Use a test device.</string>
-    <string name="wipe_test_button">WIPE DEVICE NOW</string>
-    <string name="wipe_test_open_guard">Open Guard (lock screen detector)</string>
-        
+                                            
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 6 : Dashboard                                                 -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -51,8 +42,7 @@
             
             
     <string name="dash_configure">Configure</string>
-    <string name="dash_open_wipe_test">Wipe test &amp; diagnostics</string>
-    <string name="dash_status_on">ON</string>
+        <string name="dash_status_on">ON</string>
     <string name="dash_status_off">OFF</string>
 
     <string name="dash_warn_show_password">\"Show passwords\" is OFF. Guard cannot read PIN input on the lock screen. Enable it in Security settings.</string>
@@ -80,22 +70,11 @@
         
                             
     <!-- Confirmation step 1 -->
-    <string name="wipe_test_confirm1_title">Really wipe?</string>
-    <string name="wipe_test_confirm1_text">This will erase everything on this phone: photos, apps, accounts, messages. There is no undo and no recovery.</string>
-    <string name="wipe_test_confirm1_continue">Continue</string>
-
+            
     <!-- Confirmation step 2 -->
-    <string name="wipe_test_confirm2_title">Last chance</string>
-    <string name="wipe_test_confirm2_text">Type %1$s in the field to enable the wipe button.</string>
-    <string name="wipe_test_confirm2_expected">WIPE</string>
-    <string name="wipe_test_confirm2_go">WIPE NOW</string>
-
+                
     <!-- Diagnostic -->
-    <string name="wipe_test_open_admin_settings">Open system Admin settings</string>
-    <string name="wipe_test_diag_title">Diagnostic</string>
-    <string name="wipe_test_diag_component">Component: %1$s</string>
-    <string name="wipe_test_diag_admin_state">isAdminActive() = %1$s</string>
-
+                
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 2C : Garde-clefs (lock screen trigger configuration)         -->
     <!-- ══════════════════════════════════════════════════════════════════ -->

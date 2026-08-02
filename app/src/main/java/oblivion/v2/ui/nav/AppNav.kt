@@ -9,14 +9,12 @@ import oblivion.v2.feature.dashboard.DashboardScreen
 import oblivion.v2.feature.deadman.DeadmanScreen
 import oblivion.v2.feature.guard.GuardScreen
 import oblivion.v2.feature.scheduled.ScheduledWipeScreen
-import oblivion.v2.feature.wipetest.WipeTestScreen
 
 /**
  * Destinations de navigation de l'app.
  */
 object Routes {
     const val DASHBOARD = "dashboard"
-    const val WIPE_TEST = "wipeTest"
     const val GUARD = "guard"
     const val DEADMAN = "deadman"
     const val SCHEDULED = "scheduled"
@@ -35,13 +33,6 @@ fun AppNavHost(
                 onOpenGuard = { navController.navigate(Routes.GUARD) },
                 onOpenDeadman = { navController.navigate(Routes.DEADMAN) },
                 onOpenScheduled = { navController.navigate(Routes.SCHEDULED) },
-                onOpenWipeTest = { navController.navigate(Routes.WIPE_TEST) },
-            )
-        }
-        composable(Routes.WIPE_TEST) {
-            WipeTestScreen(
-                onOpenGuard = { navController.navigate(Routes.GUARD) },
-                onBack = { navController.popBackStack() },
             )
         }
         composable(Routes.GUARD) {

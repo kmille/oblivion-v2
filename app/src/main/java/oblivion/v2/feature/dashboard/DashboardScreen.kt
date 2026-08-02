@@ -33,7 +33,6 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -44,7 +43,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -85,7 +83,6 @@ fun DashboardScreen(
     onOpenGuard: () -> Unit,
     onOpenDeadman: () -> Unit,
     onOpenScheduled: () -> Unit,
-    onOpenWipeTest: () -> Unit,
     vm: DashboardViewModel = hiltViewModel(),
 ) {
     val adminActive by vm.adminActive.collectAsStateWithLifecycle()
@@ -222,25 +219,6 @@ fun DashboardScreen(
             )
 
             Spacer(Modifier.height(24.dp))
-
-            // ── Wipe Test button ───────────────────────────────────────
-            TextButton(
-                onClick = onOpenWipeTest,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.BugReport,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    text = stringResource(R.string.dash_open_wipe_test),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
         }
     }
 }
