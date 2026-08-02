@@ -30,9 +30,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary true }
-
-        // Restrict to ABIs Vosk ships (will be needed at Étape 5).
-        ndk { abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64' }
     }
 
     signingConfigs {
@@ -73,12 +70,6 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.8'
-    }
-
-    // Les fichiers du modèle Vosk (> 10 Mo chacun) ne doivent PAS être
-    // compressés — sinon AssetManager ne peut pas les ouvrir correctement.
-    aaptOptions {
-        noCompress 'fst', 'mdl', 'conf', 'int'
     }
 
     packaging {
@@ -134,12 +125,6 @@ dependencies {
     // WorkManager — pour le Dead Man's Switch (tâche périodique qui vérifie
     // l'échéance même app fermée).
     implementation 'androidx.work:work-runtime-ktx:2.9.0'
-
-    // Vosk — reconnaissance vocale 100% offline (Étape 5 Voice Wipe).
-    // Le modèle français small (~40 Mo) est fourni séparément dans
-    // app/src/main/assets/model-fr/ — voir README de l'Étape 5.
-    implementation 'com.alphacephei:vosk-android:0.3.47'
-    implementation 'net.java.dev.jna:jna:5.13.0@aar'
 
     // Tests
     testImplementation 'junit:junit:4.13.2'

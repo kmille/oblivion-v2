@@ -7,8 +7,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Handler
-import android.os.Looper
 import oblivion.v2.core.log.SecLog
 import android.view.accessibility.AccessibilityEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,17 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import oblivion.v2.core.decoy.DecoyConfig
-import oblivion.v2.core.decoy.DecoyConfigStore
-import oblivion.v2.core.guard.detector.DecoyDetector
 import oblivion.v2.core.guard.detector.EmergencyDetector
 import oblivion.v2.core.guard.detector.TypeADetector
 import oblivion.v2.core.guard.detector.TypeBDetector
 import oblivion.v2.core.wipe.WipeGateway
-import oblivion.v2.ui.decoy.DecoyNotifier
 import javax.inject.Inject
 
 /**
@@ -47,7 +40,6 @@ import javax.inject.Inject
 class GuardAccessibilityService : AccessibilityService() {
 
     @Inject lateinit var store: GuardConfigStore
-    @Inject lateinit var decoyStore: DecoyConfigStore
     @Inject lateinit var wipeGateway: WipeGateway
     @Inject lateinit var revocationDetector: GuardRevocationDetector
 
@@ -91,10 +83,9 @@ class GuardAccessibilityService : AccessibilityService() {
         )
 
         // Observer les changements de config en direct : si l'utilisateur
-        // modifie la config (Guard OU Decoy) depuis l'UI, le service réagit
-        // sans redémarrer.
-        configJob = combine(store.config, decoyStore.config) { g, d -> g to d }
-            .onEach { (guardCfg, decoyCfg) -> rebuildDetectors(guardCfg, decoyCfg) }
+        // modifie la config depuis l'UI, le service réagit sans redémarrer.
+        configJob = store.config
+            .onEach { rebuildDetectors(it) }
             .launchIn(scope)
     }
 
@@ -145,11 +136,7 @@ class GuardAccessibilityService : AccessibilityService() {
                 .getOrDefault(false)
             if (matched) {
                 SecLog.d(TAG, "DETECTOR MATCH: ${detector.name} → wipe")
-                if (detector.name == DecoyDetector.NAME) {
-                    handleDecoyMatch()
-                } else {
-                    wipeGateway.wipeNow()
-                }
+                wipeGateway.wipeNow()
                 // Reset tous les détecteurs pour éviter qu'un second match
                 // reparte — même si le wipe est irréversible, au cas où
                 // le système l'ignorerait pour une raison quelconque.
@@ -160,16 +147,10 @@ class GuardAccessibilityService : AccessibilityService() {
     }
 
     /**
-     * Reconstruit la liste des détecteurs actifs en fonction de [config]
-     * (Guard) et [decoy] (Mode Decoy Option A).
-     *
-     * Le Mode Decoy est **indépendant** du master switch du Garde-clefs :
-     * il peut matcher même si seule la config Decoy est armée, tant que
-     * le service AccessibilityService est connecté.
+     * Reconstruit la liste des détecteurs actifs en fonction de [config].
      */
-    private fun rebuildDetectors(config: GuardConfig, decoy: DecoyConfig) {
-        val decoyActive = decoy.isReady()
-        masterEnabled = (config.masterEnabled && config.hasAnyDetectorEnabled()) || decoyActive
+    private fun rebuildDetectors(config: GuardConfig) {
+        masterEnabled = config.masterEnabled && config.hasAnyDetectorEnabled()
         val next = mutableListOf<GuardDetector>()
         if (config.masterEnabled) {
             if (config.typeAEnabled && config.typeAHash.isNotEmpty()) {
@@ -181,9 +162,6 @@ class GuardAccessibilityService : AccessibilityService() {
             if (config.emergencyEnabled && config.emergencyHash.isNotEmpty()) {
                 next += EmergencyDetector(config.emergencyHash, config.emergencySalt)
             }
-        }
-        if (decoyActive) {
-            next += DecoyDetector(decoy.pinHash, decoy.pinSalt)
         }
         detectors = next
 
@@ -213,38 +191,7 @@ class GuardAccessibilityService : AccessibilityService() {
             "Rebuilt detectors: masterEnabled=$masterEnabled, " +
                 "active=${next.map { it.name }}, " +
                 "dpmFailedThreshold=$wipeThreshold, " +
-                "armed=${store.isArmed()}, " +
-                "decoyActive=$decoyActive",
-        )
-    }
-
-    /**
-     * Orchestration du Mode Decoy quand le [DecoyDetector] matche.
-     *
-     * Android interdit à une app tierce d'afficher une UI par-dessus le
-     * lockscreen :
-     *  - `startActivity()` depuis un service → bloqué par la restriction
-     *    BAL (Background Activity Launch) pendant que l'écran est verrouillé.
-     *  - `TYPE_APPLICATION_OVERLAY` → ajouté mais sous le window keyguard
-     *    (protection anti-phishing).
-     *
-     * ✔️ **Seule voie légale** : notification avec `setFullScreenIntent()`.
-     * Le système dismisse lui-même le keyguard et lance l'[DecoyActivity]
-     * plein écran — c'est le mécanisme utilisé par les apps d'appel entrant
-     * (WhatsApp, Signal, Phone, …).
-     *
-     * Séquence :
-     *  1. Poster la notification fullScreenIntent → Android lance DecoyActivity
-     *     par-dessus le lockscreen.
-     *  2. Attendre [DECOY_WIPE_DELAY_MS] pour laisser l'activity s'afficher
-     *     avant que `wipeData()` tue le process.
-     */
-    private fun handleDecoyMatch() {
-        runCatching { DecoyNotifier.trigger(applicationContext) }
-            .onFailure { SecLog.e(TAG, "DecoyNotifier.trigger threw", it) }
-        Handler(Looper.getMainLooper()).postDelayed(
-            { wipeGateway.wipeNow() },
-            DECOY_WIPE_DELAY_MS,
+                "armed=${store.isArmed()}",
         )
     }
 
@@ -282,22 +229,5 @@ class GuardAccessibilityService : AccessibilityService() {
     private companion object {
         private const val TAG = "GuardAccessibility"
         private const val SYSTEMUI_PACKAGE = "com.android.systemui"
-
-        /**
-         * Délai entre le post de la notification FullScreenIntent (qui lance
-         * la fausse page "Mise à jour système") et l'appel à wipeData().
-         *
-         * Compromis entre :
-         *  - laisser assez de temps pour que l'écran leurre atteigne un
-         *    pourcentage crédible (une vraie MAJ ne finit pas en 2 s) ;
-         *  - ne pas donner à l'attaquant assez de temps pour déconnecter la
-         *    batterie / appuyer sur Power-off / passer en Safe mode.
-         *
-         * 8 s → la progress bar (durée totale 30 s dans DecoyActivity) atteint
-         * ~27 % avant le wipe : beaucoup plus crédible que 2 %.  Le wipeData()
-         * continue ensuite en arrière-plan pendant que l'écran reste figé sur
-         * cette frame — l'illusion tient jusqu'à la fin.
-         */
-        private const val DECOY_WIPE_DELAY_MS: Long = 8_000L
     }
 }

@@ -25,9 +25,7 @@
     <string name="wipe_test_warning">⚠️ Appuyer sur le bouton ci-dessous effacera DÉFINITIVEMENT toutes les données de ce téléphone. Pour de vrai. Utilise un téléphone de test.</string>
     <string name="wipe_test_button">EFFACER L\'APPAREIL MAINTENANT</string>
     <string name="wipe_test_open_guard">Ouvrir le Garde-clefs (détecteur lockscreen)</string>
-    <string name="wipe_test_open_usb">Ouvrir USB Kill</string>
-    <string name="wipe_test_open_voice">Ouvrir Voice Wipe</string>
-
+        
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 6 : Dashboard                                                 -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -50,14 +48,8 @@
     <string name="dash_guard_emergency">URGENCE</string>
     <string name="dash_guard_failed">Tentatives échouées (%1$d)</string>
 
-    <string name="dash_usb_title">USB Kill</string>
-    <string name="dash_usb_on">Actif — délai %1$d s</string>
-    <string name="dash_usb_off">Désactivé</string>
-
-    <string name="dash_voice_title">Voice Wipe</string>
-    <string name="dash_voice_on">Actif — écoute quand verrouillé</string>
-    <string name="dash_voice_off">Désactivé</string>
-
+            
+            
     <string name="dash_configure">Configurer</string>
     <string name="dash_open_wipe_test">Test du wipe &amp; diagnostics</string>
     <string name="dash_status_on">ON</string>
@@ -67,10 +59,7 @@
     <string name="dash_warn_pin_privacy">« Confidentialité renforcée du code » est activée. Cela empêche le Garde-clefs de détecter les frappes. Désactive-la dans Paramètres > Sécurité.</string>
     <string name="dash_warn_open_settings">Corriger</string>
 
-    <string name="dash_sms_title">SMS Wipe</string>
-    <string name="dash_sms_on">Actif — surveille les SMS entrants</string>
-    <string name="dash_sms_off">Désactivé</string>
-
+            
     <string name="dash_deadman_title">Dead Man\'s Switch</string>
     <string name="dash_deadman_on">Actif — wipe après %1$d h sans check-in</string>
     <string name="dash_deadman_off">Désactivé</string>
@@ -79,44 +68,17 @@
     <string name="dash_scheduled_on">Armé pour %1$s</string>
     <string name="dash_scheduled_off">Désactivé</string>
 
-    <string name="dash_decoy_title">Mode leurre</string>
-    <string name="dash_decoy_on">Armé — le PIN leurre déclenche une fausse MAJ + wipe</string>
-    <string name="dash_decoy_off">Désactivé</string>
-
+            
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 4 : SMS Wipe                                                  -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
-    <string name="sms_title">SMS Wipe</string>
-
-    <string name="sms_perm_title">Permission SMS</string>
-    <string name="sms_perm_desc">SMS Wipe a besoin de la permission RECEIVE_SMS pour intercepter les messages entrants.</string>
-    <string name="sms_perm_grant">Accorder la permission</string>
-
-    <string name="sms_sender_title">Expéditeur autorisé</string>
-    <string name="sms_sender_desc">Seuls les SMS provenant de ce numéro seront analysés. Utilise le format international (ex : +33612345678).</string>
-    <string name="sms_sender_label">Numéro de téléphone</string>
-    <string name="sms_sender_save">Enregistrer le numéro</string>
-
-    <string name="sms_keyword_title">Mot-clé déclencheur</string>
-    <string name="sms_keyword_desc">Si un SMS de l\'expéditeur autorisé contient ce mot-clé, l\'appareil est effacé immédiatement. Insensible à la casse.</string>
-    <string name="sms_keyword_label">Mot-clé</string>
-    <string name="sms_keyword_bounds">Entre %1$d et %2$d caractères</string>
-    <string name="sms_keyword_save">Enregistrer le mot-clé</string>
-
-    <string name="sms_master_title">SMS Wipe activé</string>
-    <string name="sms_master_desc">Surveille les SMS entrants. Si l\'expéditeur et le mot-clé correspondent, l\'appareil est effacé immédiatement.</string>
-
-    <string name="sms_rules_title">Règles</string>
-    <string name="sms_rules_body">• Seuls les SMS du numéro autorisé sont vérifiés.\n• La correspondance du mot-clé est insensible à la casse.\n• Le corps du SMS doit contenir le mot-clé (pas forcément être égal).\n• Fonctionne même quand l\'écran est verrouillé.\n• Ne nécessite PAS de carte SIM pour tester — utilise le simulateur ci-dessous.</string>
-
-    <string name="sms_sim_title">// DEBUG — Simulateur SMS</string>
-    <string name="sms_sim_desc">Teste la logique du trigger sans vrai SMS. Cela N\'EFFACE PAS — ça vérifie juste si l\'expéditeur et le mot-clé correspondent.</string>
-    <string name="sms_sim_sender">Numéro expéditeur</string>
-    <string name="sms_sim_body">Corps du SMS</string>
-    <string name="sms_sim_button">SIMULER UN SMS</string>
-    <string name="sms_sim_result_match">MATCH → le wipe se déclencherait</string>
-    <string name="sms_sim_result_no_match">Pas de correspondance</string>
-
+    
+            
+                
+                    
+        
+        
+                            
     <!-- Confirmation étape 1 -->
     <string name="wipe_test_confirm1_title">Vraiment effacer ?</string>
     <string name="wipe_test_confirm1_text">Cela effacera tout ce qu\'il y a sur ce téléphone : photos, applis, comptes, messages. Aucun retour en arrière, aucune récupération possible.</string>
@@ -178,84 +140,27 @@
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 3 : USB Kill                                                  -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
-    <string name="usb_title">USB Kill</string>
-
-    <string name="usb_admin_required">Admin appareil requis</string>
-    <string name="usb_admin_required_desc">Active l\'admin appareil depuis l\'écran Test du wipe avant d\'activer USB Kill, sinon l\'effacement échouera silencieusement.</string>
-
-    <string name="usb_master_title">USB Kill activé</string>
-    <string name="usb_master_desc">Lance un service foreground persistant qui surveille les branchements secteur/USB lorsque l\'écran est verrouillé.</string>
-
-    <string name="usb_grace_title">Délai de grâce</string>
-    <string name="usb_grace_desc">Délai entre la détection du branchement et l\'effacement. Débranche avant la fin du compte à rebours pour annuler.</string>
-    <string name="usb_grace_value">%1$d secondes</string>
-    <string name="usb_grace_value_immediate">Effacement immédiat (0 s)</string>
-
-    <string name="usb_notif_perm_title">Permission notifications</string>
-    <string name="usb_notif_perm_desc">Android 13+ exige une permission explicite pour afficher les notifications. Sans elle, la notif de compte à rebours USB Kill reste cachée (le service marche, mais tu ne vois pas et tu ne peux pas annuler le compte à rebours).</string>
-    <string name="usb_notif_perm_grant">Accorder la permission</string>
-
-    <string name="usb_rules_title">Règles</string>
-    <string name="usb_rules_body">• Se déclenche uniquement quand l\'écran est verrouillé.\n• Branchement sur écran verrouillé → démarre le compte à rebours.\n• Débranchement pendant le compte à rebours → annule.\n• Compte à rebours à zéro → wipe.</string>
-
+    
+        
+        
+                
+            
+        
     <!-- Notification -->
-    <string name="usb_channel_name">USB Kill</string>
-    <string name="usb_channel_desc">Notification persistante pendant que le service USB Kill est actif.</string>
-    <string name="usb_notif_title">Oblivion V2 — USB Kill</string>
-    <string name="usb_notif_idle">Surveillance des branchements USB / secteur…</string>
-    <string name="usb_notif_countdown">Branchement détecté — wipe dans %1$d s</string>
-    <string name="usb_notif_wiping">Effacement en cours…</string>
-
+                        
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Étape 5 : Voice Wipe                                                -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
-    <string name="voice_title">Voice Wipe</string>
-
-    <string name="voice_admin_required">Admin appareil requis</string>
-    <string name="voice_admin_required_desc">Active l\'admin appareil depuis l\'écran Test du wipe avant d\'activer Voice Wipe.</string>
-
-    <string name="voice_perm_notif_title">Permission notifications</string>
-    <string name="voice_perm_notif_desc">Accorde la permission de notifications pour que le service Voice Wipe puisse afficher son statut.</string>
-    <string name="voice_perm_mic_title">Permission micro</string>
-    <string name="voice_perm_mic_desc">Voice Wipe a besoin du micro pour écouter la phrase-clé quand l\'écran est verrouillé.</string>
-    <string name="voice_perm_grant">Accorder la permission</string>
-
-    <string name="voice_model_title">Modèle Vosk (hors-ligne)</string>
-    <string name="voice_model_desc">Voice Wipe utilise le modèle Vosk small (~40 Mo par langue), 100 %% hors-ligne. Deux langues sont supportées : français (assets/model-fr/) et anglais (assets/model-en/).\n\nSi un modèle manque, télécharge-le depuis alphacephei.com/vosk/models :\n• FR : vosk-model-small-fr-pguyot\n• EN : vosk-model-small-en-us-0.15\n\nExtrais le ZIP et copie son contenu dans le dossier assets/model-&lt;langue&gt;/ correspondant, puis recompile l\'APK.</string>
-    <string name="voice_lang_title">Langue de reconnaissance vocale</string>
-    <string name="voice_lang_desc">Sélectionne le modèle Vosk à utiliser. Le modèle doit être présent dans app/src/main/assets/model-&lt;code&gt;/.</string>
-    <string name="voice_lang_fr">Français</string>
-    <string name="voice_lang_en">Anglais</string>
-
-    <string name="voice_phrase_title">Phrase-clé</string>
-    <string name="voice_phrase_desc">Prononce cette phrase quand l\'écran est verrouillé pour déclencher l\'effacement.</string>
-    <string name="voice_phrase_label">Phrase</string>
-    <string name="voice_phrase_bounds">Entre %1$d et %2$d caractères</string>
-    <string name="voice_phrase_unsaved">Non enregistrée — appuie sur Enregistrer</string>
-    <string name="voice_phrase_save">Enregistrer la phrase</string>
-
-    <string name="voice_strict_title">Correspondance stricte</string>
-    <string name="voice_strict_on_desc">Match exact : le texte reconnu doit être identique à la phrase. Peu de faux positifs, mais peut rater dans un environnement bruyant.</string>
-    <string name="voice_strict_off_desc">Match approximatif : le texte reconnu doit contenir la phrase. Plus tolérant au bruit, mais risque de faux positifs.</string>
-
-    <string name="voice_master_title">Voice Wipe activé</string>
-    <string name="voice_master_desc">Lance un service foreground qui écoute la phrase-clé quand l\'écran est verrouillé. L\'accès au micro nécessite une permission Android explicite.</string>
-
-    <string name="voice_rules_title">Règles</string>
-    <string name="voice_rules_body">• Le micro n\'est actif que quand l\'écran est verrouillé.\n• Quand l\'écran est déverrouillé, le micro est coupé (batterie + vie privée).\n• Détection de la phrase → effacement immédiat.\n• Vosk tourne 100 %% hors-ligne — aucune donnée ne quitte l\'appareil.</string>
-
+    
+        
+                    
+                        
+                        
+            
+        
+        
     <!-- Notification -->
-    <string name="voice_channel_name">Voice Wipe</string>
-    <string name="voice_channel_desc">Notification persistante pendant que le service Voice Wipe est actif.</string>
-    <string name="voice_notif_title">Oblivion V2 — Voice Wipe</string>
-    <string name="voice_notif_unpacking">Préparation du modèle…</string>
-    <string name="voice_notif_idle">En attente — micro coupé (écran déverrouillé)</string>
-    <string name="voice_notif_listening">Écoute en cours…</string>
-    <string name="voice_notif_wiping">Effacement en cours…</string>
-    <string name="voice_notif_model_missing">Modèle manquant — voir les réglages Voice Wipe</string>
-    <string name="voice_notif_perm_missing">Permission micro manquante</string>
-    <string name="voice_notif_error">Erreur de reconnaissance — voir les logs</string>
-
+                                        
     <!-- Biometric gate -->
     <string name="biometric_title">Oblivion — Déverrouiller</string>
     <string name="biometric_subtitle">Authentifiez-vous pour accéder à Oblivion</string>
@@ -323,44 +228,4 @@
     <string name="scheduled_rules_title">Règles</string>
     <string name="scheduled_rules_body">• AlarmManager se déclenche à l\'heure exacte, même en mode Doze.\n• Ré-armé automatiquement après un reboot.\n• 100%% silencieux : aucune notification, aucune pré-alerte.\n• L\'annulation exige une authentification biométrique.\n• Si l\'admin appareil est révoqué entre l\'armement et le déclenchement, le wipe est annulé.</string>
 
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <!-- Mode leurre (Decoy, Option A)                                       -->
-    <!-- ══════════════════════════════════════════════════════════════════ -->
-    <string name="decoy_title">Mode leurre</string>
-
-    <string name="decoy_admin_required">Admin appareil requis</string>
-    <string name="decoy_admin_required_desc">Le mode leurre a besoin de l\'admin device actif pour effacer réellement. Active-le depuis le tableau de bord.</string>
-
-    <string name="decoy_notif_permission_section">Permissions de notifications</string>
-    <string name="decoy_notif_perm_title">Permission notifications</string>
-    <string name="decoy_notif_perm_desc">Android 13+ exige une permission explicite pour afficher les notifications. Sans elle, la fausse page &quot;Mise à jour système&quot; ne peut pas être déclenchée du tout (et donc le wipe non plus, puisqu\'il passe par cette notification).</string>
-    <string name="decoy_notif_perm_grant">Accorder la permission</string>
-
-    <string name="decoy_fsi_required">Notifications plein écran requises</string>
-    <string name="decoy_fsi_required_desc">Sur Android 14+, la fausse page &quot;Mise à jour système&quot; est lancée via une notification plein écran (même mécanisme que les apps d\'appels entrants). Cette permission doit être accordée manuellement. Sans elle, le wipe se déclenche quand même, mais la fausse page apparaîtra en tant que heads-up notification au lieu du plein écran.</string>
-    <string name="decoy_fsi_grant">Ouvrir les paramètres</string>
-
-    <!-- Canal de notification utilisé pour le FullScreenIntent de la fausse MAJ -->
-    <string name="decoy_channel_name">Mise à jour système</string>
-    <string name="decoy_channel_desc">Canal silencieux utilisé pour afficher la fausse page Android de mise à jour système par-dessus le lockscreen quand le PIN leurre est tapé.</string>
-
-    <string name="decoy_master_title">Mode leurre activé</string>
-    <string name="decoy_master_desc">Quand il est armé, taper le PIN leurre sur l\'écran verrouillé déclenche un wipe silencieux ET affiche une fausse page &quot;Mise à jour système&quot; pour masquer le déclenchement à l\'attaquant.</string>
-
-    <string name="decoy_pin_title">PIN leurre</string>
-    <string name="decoy_pin_desc">Choisis une courte séquence de chiffres (différente de ton vrai PIN de déverrouillage). Quand cette séquence est tapée sur le lockscreen, le wipe part.</string>
-    <string name="decoy_pin_configured">PIN configuré ✓</string>
-    <string name="decoy_pin_not_configured">Aucun PIN défini</string>
-    <string name="decoy_pin_input_label">PIN leurre (chiffres uniquement)</string>
-    <string name="decoy_pin_min_hint">Minimum %1$d chiffres</string>
-    <string name="decoy_pin_save">Enregistrer le PIN</string>
-    <string name="decoy_pin_clear">Effacer le PIN</string>
-
-    <string name="decoy_rules_title">Règles</string>
-    <string name="decoy_rules_body">• Utilise le service d\'accessibilité du Garde-clefs (surveillance lockscreen).\n• Indépendant du master switch du Garde-clefs — fonctionne seul.\n• PIN stocké en SHA-256 + sel, jamais en clair.\n• Au match : wipe en arrière-plan + fausse page &quot;Mise à jour système&quot; plein écran.\n• La fausse page ne se ferme pas ; le wipe se termine pendant ce temps.\n• Utilise une séquence que tu ne taperais jamais par accident.</string>
-
-    <!-- DecoyOverlay (fausse page mise à jour système) -->
-    <string name="decoy_update_title">Mise à jour système</string>
-    <string name="decoy_update_subtitle">Installation en cours…</string>
-    <string name="decoy_update_note">N\'éteignez pas votre appareil.</string>
 </resources>

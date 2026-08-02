@@ -30,7 +30,7 @@ class SecurePrefs private constructor(val prefs: SharedPreferences) {
         /**
          * Standard store, in credential-encrypted storage. Used for
          * everything that doesn't need to run before the first unlock
-         * (Decoy, SMS-Kill, Voice-Kill, Deadman, etc.).
+         * (Deadman, etc.).
          */
         fun create(context: Context): SecurePrefs = create(context, deviceProtected = false)
 

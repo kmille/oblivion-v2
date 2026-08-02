@@ -67,8 +67,6 @@ import oblivion.v2.R
 @Composable
 fun WipeTestScreen(
     onOpenGuard: () -> Unit = {},
-    onOpenUsbKill: () -> Unit = {},
-    onOpenVoiceKill: () -> Unit = {},
     onBack: () -> Unit = {},
     vm: WipeTestViewModel = viewModel(),
 ) {
@@ -177,24 +175,6 @@ fun WipeTestScreen(
                 onClick = onOpenGuard,
             ) {
                 Text(text = stringResource(R.string.wipe_test_open_guard))
-            }
-
-            Spacer(Modifier.height(8.dp))
-
-            OutlinedButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = onOpenUsbKill,
-            ) {
-                Text(text = stringResource(R.string.wipe_test_open_usb))
-            }
-
-            Spacer(Modifier.height(8.dp))
-
-            OutlinedButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = onOpenVoiceKill,
-            ) {
-                Text(text = stringResource(R.string.wipe_test_open_voice))
             }
 
             Spacer(Modifier.height(24.dp))

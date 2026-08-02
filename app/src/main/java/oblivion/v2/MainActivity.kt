@@ -19,14 +19,12 @@ import javax.inject.Inject
  * Héberge un NavHost Compose qui route entre les écrans :
  *  - Dashboard (accueil)
  *  - Guard / Garde-clefs (lockscreen triggers)
- *  - USB Kill (charger/USB detection)
- *  - Voice Wipe (phrase-clé Vosk offline)
  *  - Wipe Test (diagnostics)
  *
  * Sécurité :
  *  - FLAG_SECURE : empêche screenshots et enregistrements d'écran (un
- *    attaquant ne peut pas capturer les keywords SMS, phrases vocales,
- *    ou autres données sensibles affichées à l'écran).
+ *    attaquant ne peut pas capturer les PIN configurés ou autres données
+ *    sensibles affichées à l'écran).
  *  - [GuardRevocationDetector] : à chaque `onResume`, on vérifie que le
  *    GuardAccessibilityService n'a pas été désactivé hors de l'app. Si
  *    c'est le cas et que le garde était armé → wipe immédiat.

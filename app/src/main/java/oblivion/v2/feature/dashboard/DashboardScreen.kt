@@ -30,13 +30,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.HourglassBottom
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Message
-import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.Power
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -87,23 +83,15 @@ import oblivion.v2.ui.theme.OblivionRedLight
 @Composable
 fun DashboardScreen(
     onOpenGuard: () -> Unit,
-    onOpenUsbKill: () -> Unit,
-    onOpenVoiceKill: () -> Unit,
-    onOpenSmsKill: () -> Unit,
     onOpenDeadman: () -> Unit,
     onOpenScheduled: () -> Unit,
-    onOpenDecoy: () -> Unit,
     onOpenWipeTest: () -> Unit,
     vm: DashboardViewModel = hiltViewModel(),
 ) {
     val adminActive by vm.adminActive.collectAsStateWithLifecycle()
     val guardCfg by vm.guardConfig.collectAsStateWithLifecycle()
-    val usbCfg by vm.usbConfig.collectAsStateWithLifecycle()
-    val voiceCfg by vm.voiceConfig.collectAsStateWithLifecycle()
-    val smsCfg by vm.smsConfig.collectAsStateWithLifecycle()
     val deadmanCfg by vm.deadmanConfig.collectAsStateWithLifecycle()
     val scheduledCfg by vm.scheduledConfig.collectAsStateWithLifecycle()
-    val decoyCfg by vm.decoyConfig.collectAsStateWithLifecycle()
     val showPasswordOk by vm.showPasswordOk.collectAsStateWithLifecycle()
     val pinPrivacyOk by vm.pinPrivacyOk.collectAsStateWithLifecycle()
     val ctx = LocalContext.current
@@ -120,14 +108,10 @@ fun DashboardScreen(
     // Count active triggers
     val activeCount = listOf(
         guardCfg.masterEnabled,
-        usbCfg.enabled,
-        voiceCfg.enabled,
-        smsCfg.enabled,
         deadmanCfg.enabled,
         scheduledCfg.enabled,
-        decoyCfg.enabled,
     ).count { it }
-    val totalCount = 7
+    val totalCount = 3
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -203,48 +187,6 @@ fun DashboardScreen(
             Spacer(Modifier.height(10.dp))
 
             TriggerCard(
-                icon = Icons.Filled.Power,
-                title = stringResource(R.string.dash_usb_title),
-                enabled = usbCfg.enabled,
-                summary = if (usbCfg.enabled) {
-                    stringResource(R.string.dash_usb_on, usbCfg.graceSeconds)
-                } else {
-                    stringResource(R.string.dash_usb_off)
-                },
-                onClick = onOpenUsbKill,
-            )
-
-            Spacer(Modifier.height(10.dp))
-
-            TriggerCard(
-                icon = Icons.Filled.Mic,
-                title = stringResource(R.string.dash_voice_title),
-                enabled = voiceCfg.enabled,
-                summary = if (voiceCfg.enabled) {
-                    stringResource(R.string.dash_voice_on)
-                } else {
-                    stringResource(R.string.dash_voice_off)
-                },
-                onClick = onOpenVoiceKill,
-            )
-
-            Spacer(Modifier.height(10.dp))
-
-            TriggerCard(
-                icon = Icons.Filled.Message,
-                title = stringResource(R.string.dash_sms_title),
-                enabled = smsCfg.enabled,
-                summary = if (smsCfg.enabled) {
-                    stringResource(R.string.dash_sms_on)
-                } else {
-                    stringResource(R.string.dash_sms_off)
-                },
-                onClick = onOpenSmsKill,
-            )
-
-            Spacer(Modifier.height(10.dp))
-
-            TriggerCard(
                 icon = Icons.Filled.HourglassBottom,
                 title = stringResource(R.string.dash_deadman_title),
                 enabled = deadmanCfg.enabled,
@@ -277,20 +219,6 @@ fun DashboardScreen(
                     stringResource(R.string.dash_scheduled_off)
                 },
                 onClick = onOpenScheduled,
-            )
-
-            Spacer(Modifier.height(10.dp))
-
-            TriggerCard(
-                icon = Icons.Filled.VisibilityOff,
-                title = stringResource(R.string.dash_decoy_title),
-                enabled = decoyCfg.enabled,
-                summary = if (decoyCfg.enabled) {
-                    stringResource(R.string.dash_decoy_on)
-                } else {
-                    stringResource(R.string.dash_decoy_off)
-                },
-                onClick = onOpenDecoy,
             )
 
             Spacer(Modifier.height(24.dp))

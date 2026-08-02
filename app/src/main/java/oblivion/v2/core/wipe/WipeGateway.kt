@@ -9,7 +9,7 @@ import oblivion.v2.core.admin.DeviceAdminReceiver
 
 /**
  * Façade unique pour déclencher le wipe depuis n'importe quel point de
- * l'application (bouton manuel, AccessibilityService, USB, SMS, Voice).
+ * l'application (bouton manuel, AccessibilityService).
  *
  * La seule implémentation du wipe délègue à [DeviceAdminManager.wipeData]
  * qui contient les appels `DevicePolicyManager.wipeData(flags)` avec
