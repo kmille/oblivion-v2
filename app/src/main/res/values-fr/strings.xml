@@ -50,7 +50,7 @@
     <string name="dash_warn_open_settings">Corriger</string>
 
             
-    <string name="dash_deadman_title">Dead Man\'s Switch</string>
+    <string name="dash_deadman_title">Wipe par inactivité</string>
     <string name="dash_deadman_on">Actif — wipe après %1$d h sans check-in</string>
     <string name="dash_deadman_off">Désactivé</string>
 
@@ -148,12 +148,12 @@
     <string name="biometric_unlock_button">Déverrouiller</string>
 
     <!-- ══════════════════════════════════════════════════════════════════ -->
-    <!-- Dead Man\'s Switch                                                 -->
+    <!-- Wipe par inactivité                                                 -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
-    <string name="deadman_title">Dead Man\'s Switch</string>
+    <string name="deadman_title">Wipe par inactivité</string>
 
     <string name="deadman_admin_required">Admin appareil requis</string>
-    <string name="deadman_admin_required_desc">Active l\'admin appareil depuis l\'écran Test du wipe avant d\'activer le Dead Man\'s Switch.</string>
+    <string name="deadman_admin_required_desc">Active l\'admin appareil avant d\'activer le Wipe par inactivité.</string>
 
     <string name="deadman_master_title">Switch activé</string>
     <string name="deadman_master_desc">Si tu ne déverrouilles pas l\'app via biométrie/PIN pendant l\'intervalle ci-dessous, l\'appareil est effacé automatiquement. Silencieux : aucune notification.</string>

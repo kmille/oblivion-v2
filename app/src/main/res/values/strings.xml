@@ -50,7 +50,7 @@
     <string name="dash_warn_open_settings">Fix</string>
 
             
-    <string name="dash_deadman_title">Dead Man\'s Switch</string>
+    <string name="dash_deadman_title">Inactivity Wipe</string>
     <string name="dash_deadman_on">Active — wipe after %1$d h without check-in</string>
     <string name="dash_deadman_off">Disabled</string>
 
@@ -148,12 +148,12 @@
     <string name="biometric_unlock_button">Unlock</string>
 
     <!-- ══════════════════════════════════════════════════════════════════ -->
-    <!-- Dead Man\'s Switch                                                 -->
+    <!-- Inactivity Wipe                                                     -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
-    <string name="deadman_title">Dead Man\'s Switch</string>
+    <string name="deadman_title">Inactivity Wipe</string>
 
     <string name="deadman_admin_required">Device Admin required</string>
-    <string name="deadman_admin_required_desc">Enable Device Admin on the Wipe test screen before turning on the Dead Man\'s Switch.</string>
+    <string name="deadman_admin_required_desc">Enable Device Admin before turning on Inactivity Wipe.</string>
 
     <string name="deadman_master_title">Switch enabled</string>
     <string name="deadman_master_desc">If you do not unlock the app via biometrics/PIN during the interval below, the device is wiped automatically. Silent: no notification.</string>
