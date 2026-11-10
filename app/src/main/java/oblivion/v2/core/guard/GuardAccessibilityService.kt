@@ -17,6 +17,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import oblivion.v2.core.deadman.DeadmanConfigStore
 import oblivion.v2.core.guard.detector.EmergencyDetector
 import oblivion.v2.core.guard.detector.TypeADetector
 import oblivion.v2.core.guard.detector.TypeBDetector
@@ -42,6 +43,7 @@ class GuardAccessibilityService : AccessibilityService() {
     @Inject lateinit var store: GuardConfigStore
     @Inject lateinit var wipeGateway: WipeGateway
     @Inject lateinit var revocationDetector: GuardRevocationDetector
+    @Inject lateinit var deadmanConfigStore: DeadmanConfigStore
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var configJob: Job? = null
@@ -65,6 +67,18 @@ class GuardAccessibilityService : AccessibilityService() {
                     // Le compteur de tentatives échouées est géré nativement
                     // par Android (setMaximumFailedPasswordsForWipe) — il se
                     // remet à zéro tout seul à chaque déverrouillage réussi.
+
+                    // Inactivity Wipe : tout déverrouillage réel de l'appareil
+                    // compte comme preuve de présence, pas seulement
+                    // l'ouverture d'Oblivion elle-même — sinon utiliser le
+                    // téléphone normalement toute la journée sans jamais
+                    // ouvrir l'app ferait quand même courir le compte à
+                    // rebours vers un wipe.
+                    try {
+                        deadmanConfigStore.touchCheckIn()
+                    } catch (t: Throwable) {
+                        SecLog.e(TAG, "touchCheckIn from USER_PRESENT threw", t)
+                    }
                 }
             }
         }

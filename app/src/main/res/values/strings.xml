@@ -156,10 +156,10 @@
     <string name="deadman_admin_required_desc">Enable Device Admin before turning on Inactivity Wipe.</string>
 
     <string name="deadman_master_title">Switch enabled</string>
-    <string name="deadman_master_desc">If you do not unlock the app via biometrics/PIN during the interval below, the device is wiped automatically. Silent: no notification.</string>
+    <string name="deadman_master_desc">If you do not unlock your device during the interval below, the device is wiped automatically. Silent: no notification.</string>
 
     <string name="deadman_interval_title">Inactivity interval</string>
-    <string name="deadman_interval_desc">Choose hours or days. Any biometric authentication in the app resets the countdown.</string>
+    <string name="deadman_interval_desc">Choose hours or days. Unlocking your device resets the countdown.</string>
     <string name="deadman_unit_hours">Hours</string>
     <string name="deadman_unit_days">Days</string>
     <string name="deadman_value_hours_label">Hours (1–1440)</string>
@@ -174,7 +174,7 @@
     <string name="deadman_checkin_now">Check-in now</string>
 
     <string name="deadman_rules_title">Rules</string>
-    <string name="deadman_rules_body">• The countdown resets every time you unlock the app via biometrics.\n• A periodic background task checks the deadline (every 15 min).\n• Works even when the app is closed (as long as Android has not killed the WorkManager job).\n• 100%% silent: no notification, no alert.\n• Minimum 1 hour, maximum 60 days.</string>
+    <string name="deadman_rules_body">• The countdown resets every time you unlock your device.\n• A periodic background task checks the deadline (every 15 min).\n• Works even when the app is closed (as long as Android has not killed the WorkManager job).\n• 100%% silent: no notification, no alert.\n• Minimum 1 hour, maximum 60 days.</string>
 
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Scheduled Wipe                                                     -->

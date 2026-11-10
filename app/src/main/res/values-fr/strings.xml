@@ -156,10 +156,10 @@
     <string name="deadman_admin_required_desc">Active l\'admin appareil avant d\'activer le Wipe par inactivité.</string>
 
     <string name="deadman_master_title">Switch activé</string>
-    <string name="deadman_master_desc">Si tu ne déverrouilles pas l\'app via biométrie/PIN pendant l\'intervalle ci-dessous, l\'appareil est effacé automatiquement. Silencieux : aucune notification.</string>
+    <string name="deadman_master_desc">Si tu ne déverrouilles pas ton appareil pendant l\'intervalle ci-dessous, l\'appareil est effacé automatiquement. Silencieux : aucune notification.</string>
 
     <string name="deadman_interval_title">Intervalle d\'inactivité</string>
-    <string name="deadman_interval_desc">Choisis heures ou jours. Chaque authentification biométrique dans l\'app réinitialise le compte à rebours.</string>
+    <string name="deadman_interval_desc">Choisis heures ou jours. Déverrouiller ton appareil réinitialise le compte à rebours.</string>
     <string name="deadman_unit_hours">Heures</string>
     <string name="deadman_unit_days">Jours</string>
     <string name="deadman_value_hours_label">Heures (1–1440)</string>
@@ -174,7 +174,7 @@
     <string name="deadman_checkin_now">Check-in maintenant</string>
 
     <string name="deadman_rules_title">Règles</string>
-    <string name="deadman_rules_body">• Le compte à rebours se réinitialise à chaque déverrouillage de l\'app via biométrie.\n• Une tâche de fond périodique vérifie l\'échéance (toutes les 15 min).\n• Fonctionne même app fermée (tant qu\'Android n\'a pas tué le job WorkManager).\n• 100%% silencieux : aucune notification, aucune alerte.\n• Minimum 1 heure, maximum 60 jours.</string>
+    <string name="deadman_rules_body">• Le compte à rebours se réinitialise à chaque déverrouillage de l\'appareil.\n• Une tâche de fond périodique vérifie l\'échéance (toutes les 15 min).\n• Fonctionne même app fermée (tant qu\'Android n\'a pas tué le job WorkManager).\n• 100%% silencieux : aucune notification, aucune alerte.\n• Minimum 1 heure, maximum 60 jours.</string>
 
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- Wipe programmé                                                     -->
